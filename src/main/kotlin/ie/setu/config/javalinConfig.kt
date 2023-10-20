@@ -1,5 +1,4 @@
 package ie.setu.config
-
 import ie.setu.controllers.HealthTrackerController
 import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder.*
