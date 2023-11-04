@@ -17,11 +17,11 @@ class ActivityDAO {
         return activitiesList
     }
 
-    // Find a specific activity of a user by activity id
-    fun findByActivityId(id: Int, userId: Int): Activity? {
+    // Find a specific activity by activity id
+    fun findByActivityId(id: Int): Activity? {
         return transaction {
             Activities
-                .select() { (Activities.id eq id) and (Activities.userId eq userId) }
+                .select() { Activities.id eq id }
                 .map { mapToActivity(it) }
                 .firstOrNull()
         }
