@@ -49,10 +49,7 @@ object ActivityController {
     }
 
     fun deleteActivityByActivityId(ctx: Context) {
-        val activity = activityDAO.findByActivityId(ctx.pathParam("activity-id").toInt(), ctx.pathParam("user-id").toInt())
-        if (activity != null) {
-            activityDAO.deleteActivity(activity.id, activity.userId)
-        }
+        activityDAO.deleteActivity(ctx.pathParam("activity-id").toInt(), ctx.pathParam("user-id").toInt())
     }
     fun updateActivity(ctx: Context) {
         val mapper = jacksonObjectMapper().registerModule(JodaModule()).configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)

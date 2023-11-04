@@ -15,7 +15,6 @@ class DBConfig {
         val PGPASSWORD = "zYRnnjEAFjtxaolYD8zu_HglE537yohr"
         val PGDATABASE = "wyvtajae"
         val dbUrl = "jdbc:postgresql://$PGHOST:$PGPORT/$PGDATABASE"
-        logger.info { "Between DB Connection..." }
 
         val dbConfig = Database.connect(
             url = dbUrl,

@@ -30,7 +30,7 @@ object MealController {
     }
     fun getAllMealsByMealId(ctx: Context) {
         val mapper = jacksonObjectMapper().registerModule(JodaModule()).configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-        ctx.json(mapper.writeValueAsString(mealDAO.getAllMealsOfSameId(ctx.pathParam("meal-id").toInt())))
+        ctx.json(mapper.writeValueAsString(mealDAO.findMealById(ctx.pathParam("meal-id").toInt())))
     }
     fun addMeal(ctx: Context) {
         logger.info { "Inside addmeal" }

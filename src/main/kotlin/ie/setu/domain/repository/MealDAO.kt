@@ -20,12 +20,12 @@ class MealDAO {
         return mealsList
     }
 
-    // Find all meals by Id
-    fun getAllMealsOfSameId(id: Int): List<Meal> {
+    // Find a meal by Id
+    fun findMealById(id: Int): Meal? {
         return transaction {
             Meals.select() {
                 Meals.id eq id
-            }.map { mapToMeal(it) }
+            }.map { mapToMeal(it) }.firstOrNull()
         }
     }
 
