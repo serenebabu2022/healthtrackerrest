@@ -1,11 +1,7 @@
 package ie.setu.utils
 
-import ie.setu.domain.Activity
-import ie.setu.domain.Meal
-import ie.setu.domain.User
-import ie.setu.domain.db.Activities
-import ie.setu.domain.db.Meals
-import ie.setu.domain.db.Users
+import ie.setu.domain.*
+import ie.setu.domain.db.*
 import org.jetbrains.exposed.sql.ResultRow
 
 fun mapToUser(it: ResultRow) = User(
@@ -27,4 +23,13 @@ fun mapToMeal(it: ResultRow) = Meal(
     calories = it[Meals.calories],
     time = it[Meals.time],
     userId = it[Meals.userId],
+)
+fun mapToFriend(it: ResultRow) = Friend(
+    id = it[Friends.id],
+    name = it[Friends.name],
+    goals = it[Friends.goals],
+)
+fun mapToUserFriend(it: ResultRow) = UserFriend(
+    userId = it[UserFriends.userId],
+    friendId = it[UserFriends.friendId],
 )
