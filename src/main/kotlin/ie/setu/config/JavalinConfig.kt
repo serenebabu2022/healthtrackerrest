@@ -1,5 +1,6 @@
 package ie.setu.config
 import ie.setu.controllers.ActivityController
+import ie.setu.controllers.FriendsController
 import ie.setu.controllers.MealController
 import ie.setu.controllers.UserController
 import io.javalin.Javalin
@@ -57,6 +58,15 @@ class JavalinConfig {
                 post(MealController::addMeal)
                 path("{meal-id}") {
                     get(MealController::getAllMealsByMealId)
+                }
+            }
+            path("/api/friends") {
+                get(FriendsController::getAllFriends)
+                post(FriendsController::addFriend)
+                path("{friend-id}") {
+                    get(FriendsController::getFriendById)
+                    delete(FriendsController::deleteFriends)
+                    patch(FriendsController::updateFriend)
                 }
             }
         }

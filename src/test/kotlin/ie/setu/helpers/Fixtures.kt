@@ -1,6 +1,7 @@
 package ie.setu.helpers
 
 import ie.setu.domain.Activity
+import ie.setu.domain.Friend
 import ie.setu.domain.Meal
 import ie.setu.domain.User
 import org.joda.time.DateTime
@@ -23,4 +24,10 @@ val meals = arrayListOf<Meal>(
     Meal(description = "Rice", calories = 101, time = DateTime.now(), userId = 1, id = 1),
     Meal(description = "Potato", calories = 101, time = DateTime.now(), userId = 1, id = 1),
     Meal(description = "Veggies", calories = 101, time = DateTime.now(), userId = 1, id = 1),
+)
+
+val friends = arrayListOf<Friend>(
+    Friend(name = "Alice wonderland", goals = "fitness", id = 1),
+    Friend(name = "Doja Cat", goals = "fitness", id = 2),
+    Friend(name = "Taylor Swift", goals = "menatal health", id = 3),
 )
