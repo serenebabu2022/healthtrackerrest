@@ -3,10 +3,10 @@ package ie.setu.controllers
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.joda.JodaModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import ie.setu.domain.Activity
 import ie.setu.domain.repository.ActivityDAO
 import ie.setu.domain.repository.UserDAO
+import ie.setu.utils.jsonToObject
 import io.javalin.http.Context
 import mu.KotlinLogging
 
@@ -34,8 +34,7 @@ object ActivityController {
         ctx.json(mapper.writeValueAsString(activityDAO.getAllActivitiesOfSameId(ctx.pathParam("activity-id").toInt())))
     }
     fun addActivity(ctx: Context) {
-        val mapper = jacksonObjectMapper().registerModule(JodaModule()).configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-        val activity = mapper.readValue<Activity>(ctx.body())
+        val activity: Activity = jsonToObject(ctx.body())
         activityDAO.save(activity)
         ctx.json(activity)
     }
@@ -52,8 +51,7 @@ object ActivityController {
         activityDAO.deleteActivity(ctx.pathParam("activity-id").toInt(), ctx.pathParam("user-id").toInt())
     }
     fun updateActivity(ctx: Context) {
-        val mapper = jacksonObjectMapper().registerModule(JodaModule()).configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-        val activity = mapper.readValue<Activity>(ctx.body())
+        val activity: Activity = jsonToObject(ctx.body())
         activityDAO.updateActivity(ctx.pathParam("activity-id").toInt(), activity)
     }
 }
