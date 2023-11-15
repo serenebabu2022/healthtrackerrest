@@ -9,6 +9,8 @@ import org.joda.time.DateTime
 val nonExistingEmail = "gvregergre@berber.erg"
 val validName = "Test user 1"
 val validEmail = "testuser1@test.com"
+val updatedName = "Updated Name"
+val updatedEmail = "Updated Email"
 
 val users = arrayListOf<User>(
     User(name = "Alice wonderland", email = "alice@wonderland.com", id = 1),
