@@ -4,7 +4,6 @@ import ie.setu.config.DBConfig
 import ie.setu.domain.User
 import ie.setu.helpers.*
 import ie.setu.helpers.ServerContainer
-import ie.setu.helpers.nonExistingEmail
 import ie.setu.utils.jsonToObject
 import kong.unirest.HttpResponse
 import kong.unirest.JsonNode
@@ -59,11 +58,8 @@ class UserControllerTest {
 
         @Test
         fun `get user by id when user does not exist returns 404 response`() {
-            // Arrange - test data for user id
-            val id = Integer.MIN_VALUE
-
             // Act-attempt to retrieve the non-existent user from the database
-            val retrieveResponse = Unirest.get(origin + "/api/users/$id").asString()
+            val retrieveResponse = retrieveUserById(Integer.MIN_VALUE)
 
             // Assert- Verify return code
             assertEquals(404, retrieveResponse.status)
@@ -84,9 +80,9 @@ class UserControllerTest {
         }
 
         @Test
-        fun `get by user email when user doesnot exist`() {
+        fun `get by user email when user doesnot exist returns 404`() {
             // Arrange & Act - attempt to retrieve the non existent userfrom the database
-            val retrieveResponse = Unirest.get(origin + "/api/users/email/$nonExistingEmail").asString()
+            val retrieveResponse = retrieveUserByEmail(nonExistingEmail)
 
             // Assert- verify return code
             assertEquals(404, retrieveResponse.status)
