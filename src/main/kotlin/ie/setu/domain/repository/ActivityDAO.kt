@@ -44,33 +44,29 @@ class ActivityDAO {
     }
 
     // Save an activity to the database
-    fun save(activity: Activity) {
-        transaction {
+    fun save(activity: Activity): Int {
+        return transaction {
             Activities.insert {
                 it[description] = activity.description
                 it[duration] = activity.duration
-                it[started] = activity.started
                 it[calories] = activity.calories
+                it[started] = activity.started
                 it[userId] = activity.userId
             }
-        }
+        } get Activities.id
     }
 
-    fun deleteActivities(id: Int): Int {
+    fun deleteByActivityId(activityId: Int): Int {
         return transaction {
-            Activities.deleteWhere {
-                Activities.userId eq id
-            }
+            Activities.deleteWhere { Activities.id eq activityId }
         }
     }
-    fun deleteActivity(id: Int, userId: Int) {
+    fun deleteByUserId(userId: Int): Int {
         return transaction {
-            Activities.deleteWhere {
-                (Activities.id eq id) and (Activities.userId eq userId)
-            }
+            Activities.deleteWhere { Activities.userId eq userId }
         }
     }
-    fun updateActivity(id: Int, activity: Activity) {
+    fun updateByActivityId(id: Int, activity: Activity): Int {
         return transaction {
             Activities.update({
                 Activities.id eq id
@@ -79,6 +75,7 @@ class ActivityDAO {
                 it[duration] = activity.duration
                 it[calories] = activity.calories
                 it[started] = activity.started
+                it[userId] = activity.userId
             }
         }
     }
