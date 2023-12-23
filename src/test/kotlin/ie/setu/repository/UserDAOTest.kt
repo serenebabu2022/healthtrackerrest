@@ -29,23 +29,6 @@ class UserDAOTest {
     }
 
     @Nested
-    inner class CreateUsers {
-        @Test
-        fun `multiple users added to table can be retrieved successfully`() {
-            transaction {
-                // Arrange - create and populate table with three users
-                val userDAO = populateUserTable()
-
-                // Act & Assert
-                assertEquals(3, userDAO.getAll().size)
-                assertEquals(user1, userDAO.findById(user1.id))
-                assertEquals(user2, userDAO.findById(user2.id))
-                assertEquals(user3, userDAO.findById(user3.id))
-            }
-        }
-    }
-
-    @Nested
     inner class ReadUsers {
         @Test
         fun `getting all users from a populated table returns all rows`() {
@@ -110,6 +93,23 @@ class UserDAOTest {
 
                 // Act and Assert
                 assertEquals(user2, userDAO.findByEmail(user2.email))
+            }
+        }
+    }
+
+    @Nested
+    inner class CreateUsers {
+        @Test
+        fun `multiple users added to table can be retrieved successfully`() {
+            transaction {
+                // Arrange - create and populate table with three users
+                val userDAO = populateUserTable()
+
+                // Act & Assert
+                assertEquals(3, userDAO.getAll().size)
+                assertEquals(user1, userDAO.findById(user1.id))
+                assertEquals(user2, userDAO.findById(user2.id))
+                assertEquals(user3, userDAO.findById(user3.id))
             }
         }
     }
