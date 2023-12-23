@@ -33,6 +33,8 @@ class ActivityDAOTest {
         @Test
         fun `multiple activities added to the table can be retrieved successfully`() {
             transaction {
+                // Arrange - create and populate tables with three users and three activities
+                val userDAO = populateUserTable()
                 val activityDAO = populateActivityTable()
 
                 // Act and Insert
@@ -49,6 +51,8 @@ class ActivityDAOTest {
         @Test
         fun `getting all activities from a populated table returns all rows`() {
             transaction {
+                // Arrange - create and populate tables with three users and three activities
+                val userDAO = populateUserTable()
                 val activityDAO = populateActivityTable()
                 assertEquals(3, activityDAO.getAll().size)
             }
@@ -57,6 +61,8 @@ class ActivityDAOTest {
         @Test
         fun `get activity by id that doesnt exist, returns no activity`() {
             transaction {
+                // Arrange - create and populate tables with three users and three activities
+                val userDAO = populateUserTable()
                 val activityDAO = populateActivityTable()
                 assertEquals(null, activityDAO.findByActivityId(4))
             }
@@ -75,14 +81,29 @@ class ActivityDAOTest {
         @Test
         fun `get activities by a specific user by userid`() {
             transaction {
+                // Arrange - create and populate tables with three users and three activities
+                val userDAO = populateUserTable()
                 val activityDAO = populateActivityTable()
                 assertEquals(3, activityDAO.findByUserId(1).size)
             }
         }
 
         @Test
+        fun `get activity by user id that has no activities, results in no record returned`() {
+            transaction {
+                // Arrange - create and populate tables with three users and three activities
+                val userDAO = populateUserTable()
+                val activityDAO = populateActivityTable()
+                // Act & Assert
+                assertEquals(0, activityDAO.findByUserId(3).size)
+            }
+        }
+
+        @Test
         fun `get all activities of same id works`() {
             transaction {
+                // Arrange - create and populate tables with three users and three activities
+                val userDAO = populateUserTable()
                 val activityDAO = populateActivityTable()
                 assertEquals(1, activityDAO.getAllActivitiesOfSameId(2).size)
             }
@@ -143,7 +164,7 @@ class ActivityDAOTest {
                 // Act & Assert
                 assertEquals(3, activityDAO.getAll().size)
                 activityDAO.deleteByUserId(1)
-                assertEquals(1, activityDAO.getAll().size)
+                assertEquals(0, activityDAO.getAll().size)
             }
         }
     }
@@ -153,10 +174,34 @@ class ActivityDAOTest {
         @Test
         fun `update activity of a user results in the record in the table being updated`() {
             transaction {
+                // Arrange - create and populate tables with three users and three activities
+                val userDAO = populateUserTable()
                 val activityDAO = populateActivityTable()
                 val activity1updated = Activity(description = "Walking and singing", duration = 40.0, calories = 101, started = DateTime.now(), userId = 1, id = 1)
                 activityDAO.updateByActivityId(activity1updated.id, activity1updated)
                 assertEquals(activity1updated, activityDAO.findByActivityId(1))
+            }
+        }
+
+        @Test
+        fun `updating non-existant activity in table results in no updates`() {
+            transaction {
+                // Arrange - create and populate tables with three users and three activities
+                val userDAO = populateUserTable()
+                val activityDAO = populateActivityTable()
+
+                // Act & Assert
+                val activity4updated = Activity(
+                    id = 4,
+                    description = "Cardio",
+                    duration = 42.0,
+                    calories = 220,
+                    started = DateTime.now(),
+                    userId = 2,
+                )
+                activityDAO.updateByActivityId(4, activity4updated)
+                assertEquals(null, activityDAO.findByActivityId(4))
+                assertEquals(3, activityDAO.getAll().size)
             }
         }
     }
