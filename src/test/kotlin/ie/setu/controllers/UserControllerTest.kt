@@ -9,6 +9,7 @@ import kong.unirest.HttpResponse
 import kong.unirest.JsonNode
 import kong.unirest.Unirest
 import org.junit.Assert.assertNotEquals
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -108,18 +109,22 @@ class UserControllerTest {
         @Test
         fun `add a user with correct details returns a 201 response`() {
             // Arrange & Act & Assert
-            // add the user and verify return code (using fixture data)
+            //    add the user and verify return code (using fixture data)
             val addResponse = addUser(validName, validEmail)
-            assertEquals(201, addResponse.status)
+            Assertions.assertEquals(201, addResponse.status)
 
             // Assert - retrieve the added user from the database and verify return code
-            val retrievedUser: User = jsonToObject(addResponse.body.toString())
-            assertEquals(validEmail, retrievedUser.email)
-            assertEquals(validName, retrievedUser.name)
+            val retrieveResponse = retrieveUserByEmail(validEmail)
+            Assertions.assertEquals(200, retrieveResponse.status)
 
-            // After-restore the db to previous state by deleting the added user
+            // Assert - verify the contents of the retrieved user
+            val retrievedUser: User = jsonToObject(addResponse.body.toString())
+            Assertions.assertEquals(validEmail, retrievedUser.email)
+            Assertions.assertEquals(validName, retrievedUser.name)
+
+            // After - restore the db to previous state by deleting the added user
             val deleteResponse = deleteUser(retrievedUser.id)
-            assertEquals(204, deleteResponse.status)
+            Assertions.assertEquals(204, deleteResponse.status)
         }
     }
 
