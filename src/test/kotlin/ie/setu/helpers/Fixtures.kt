@@ -37,11 +37,6 @@ val meals = arrayListOf<Meal>(
     Meal(description = "Veggies", calories = 101, time = DateTime.now(), userId = 1, id = 1),
 )
 
-val friends = arrayListOf<Friend>(
-    Friend(name = "Alice wonderland", goals = "fitness", id = 1),
-    Friend(name = "Doja Cat", goals = "fitness", id = 2),
-    Friend(name = "Taylor Swift", goals = "menatal health", id = 3),
-)
 fun populateUserTable(): UserDAO {
     SchemaUtils.create(Users)
     val userDAO = UserDAO()
