@@ -87,7 +87,7 @@ class MealDAOTest {
                 val mealDAO = populateMealsTable()
 
                 assertEquals(3, mealDAO.getAll().size)
-                mealDAO.deleteMeal(1, 1)
+                mealDAO.deleteMeal(1)
                 assertEquals(2, mealDAO.getAll().size)
             }
         }
