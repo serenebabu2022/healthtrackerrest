@@ -95,7 +95,6 @@
       </div></div
   ></app-layout>
 </template>
-
 <script>
 app.component("meal-details", {
   template: "#meal-details",

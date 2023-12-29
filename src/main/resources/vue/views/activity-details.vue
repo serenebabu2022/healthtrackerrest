@@ -107,7 +107,6 @@
       </div></div
   ></app-layout>
 </template>
-
 <script>
 app.component("activity-details", {
   template: "#activity-details",
