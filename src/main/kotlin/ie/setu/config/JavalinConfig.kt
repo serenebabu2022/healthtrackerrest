@@ -47,10 +47,6 @@ class JavalinConfig {
                     path("meals") {
                         get(MealController::getMealsByUserId)
                         delete(MealController::deleteMealsByUserId)
-                        path("{meal-id}") {
-                            delete(MealController::deleteMealByMealId)
-                            patch(MealController::updateMeal)
-                        }
                     }
                 }
                 path("email/{email-id}") {
@@ -71,17 +67,11 @@ class JavalinConfig {
                 post(MealController::addMeal)
                 path("{meal-id}") {
                     get(MealController::getAllMealsByMealId)
+                    patch(MealController::updateMeal)
+                    delete(MealController::deleteMealByMealId)
                 }
             }
-            path("/api/friends") {
-                get(FriendsController::getAllFriends)
-                post(FriendsController::addFriend)
-                path("{friend-id}") {
-                    get(FriendsController::getFriendById)
-                    delete(FriendsController::deleteFriends)
-                    patch(FriendsController::updateFriend)
-                }
-            }
+
             // The @routeComponent that we added in layout.html earlier will be replaced
             // by the String inside the VueComponent. This means a call to / will load
             // the layout and display our <home-page> component.
@@ -93,6 +83,8 @@ class JavalinConfig {
             get("/", VueComponent("<first-page></first-page>"))
             get("/dashboard", VueComponent("<dashboard></dashboard>"))
             get("/activities/{activity-id}", VueComponent("<activity-details></activity-details>"))
+            get("/meals", VueComponent("<meals-overview></meals-overview>"))
+            get("/meals/{meal-id}", VueComponent("<meal-details></meal-details>"))
             get("/login", VueComponent("<login-view></login-view>"))
         }
     }

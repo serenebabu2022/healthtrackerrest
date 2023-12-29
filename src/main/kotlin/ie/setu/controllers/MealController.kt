@@ -48,9 +48,9 @@ object MealController {
         }
     }
     fun deleteMealByMealId(ctx: Context) {
-        val meal = mealDAO.findMealByMealIdAndUserId(ctx.pathParam("meal-id").toInt(), ctx.pathParam("user-id").toInt())
+        val meal = mealDAO.findMealById(ctx.pathParam("meal-id").toInt())
         if (meal != null) {
-            mealDAO.deleteMeal(ctx.pathParam("meal-id").toInt(), ctx.pathParam("user-id").toInt())
+            mealDAO.deleteMeal(ctx.pathParam("meal-id").toInt())
         }
     }
     fun updateMeal(ctx: Context) {

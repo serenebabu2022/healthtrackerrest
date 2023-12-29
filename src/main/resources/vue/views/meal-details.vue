@@ -1,20 +1,20 @@
-<template id="activity-details">
+<template id="meal-details">
   <app-layout>
-    <div v-if="noActivityFound">
-      <p>We're sorry, we were not able to retrieve this activity.</p>
-      <p>View <a :href="'/activities'">all activities</a>.</p>
+    <div v-if="noMealFound">
+      <p>We're sorry, we were not able to retrieve this meal.</p>
+      <p>View <a :href="'/meals'">all meals</a>.</p>
     </div>
     <div>
-      <div class="card bg-light mb-3" v-if="!noActivityFound">
+      <div class="card bg-light mb-3" v-if="!noMealFound">
         <div class="card-header">
           <div class="row">
-            <div class="col-6">Activity Details</div>
+            <div class="col-6">Meals Details</div>
             <div class="col" align="right">
               <button
                 rel="tooltip"
                 title="Update"
                 class="btn btn-info btn-simple btn-link"
-                @click="updateActivity()"
+                @click="updateMeal()"
               >
                 <i class="far fa-save" aria-hidden="true"></i>
               </button>
@@ -22,7 +22,7 @@
                 rel="tooltip"
                 title="Delete"
                 class="btn btn-info btn-simple btn-link"
-                @click="deleteActivity()"
+                @click="deleteMeal()"
               >
                 <i class="fas fa-trash" aria-hidden="true"></i>
               </button>
@@ -32,12 +32,12 @@
         <div class="card-body">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <span class="input-group-text">Activity ID</span>
+              <span class="input-group-text">Meal ID</span>
             </div>
             <input
               type="number"
               class="form-control"
-              v-model="activities.id"
+              v-model="meals.id"
               name="id"
               readonly
               placeholder="Id"
@@ -50,21 +50,21 @@
             <input
               type="text"
               class="form-control"
-              v-model="activities.description"
+              v-model="meals.description"
               name="description"
               placeholder="Description"
             />
           </div>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <span class="input-group-text">Duration</span>
+              <span class="input-group-text">Time</span>
             </div>
             <input
               type="text"
               class="form-control"
-              v-model="activities.duration"
-              name="duration"
-              placeholder="Duration"
+              v-model="meals.time"
+              name="time"
+              placeholder="Time"
             />
           </div>
           <div class="input-group mb-3">
@@ -74,21 +74,9 @@
             <input
               type="text"
               class="form-control"
-              v-model="activities.calories"
+              v-model="meals.calories"
               name="calories"
               placeholder="Calories"
-            />
-          </div>
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text">Started</span>
-            </div>
-            <input
-              type="text"
-              class="form-control"
-              v-model="activities.started"
-              name="started"
-              placeholder="Started"
             />
           </div>
           <div class="input-group mb-3">
@@ -98,7 +86,7 @@
             <input
               type="text"
               class="form-control"
-              v-model="activities.userId"
+              v-model="meals.userId"
               name="userId"
               placeholder="userId"
             />
@@ -109,61 +97,59 @@
 </template>
 
 <script>
-app.component("activity-details", {
-  template: "#activity-details",
+app.component("meal-details", {
+  template: "#meal-details",
   data: () => ({
-    noActivityFound: false,
-    activities: null,
+    noMealFound: false,
+    meals: null,
   }),
   created: function () {
-    const activityId = this.$javalin.pathParams["activity-id"];
-    const url = `/api/activities/${activityId}`;
+    const mealId = this.$javalin.pathParams["meal-id"];
+    const url = `/api/meals/${mealId}`;
     axios
       .get(url)
       .then((res) => {
-        this.activities = res.data;
-        console.log(this.activities);
+        this.meals = res.data;
       })
       .catch((error) => {
         console.log(
-          "No activity found for id passed in the path parameter: " + error,
+          "No meal found for id passed in the path parameter: " + error,
         );
-        this.noActivityFound = true;
+        this.noMealFound = true;
       });
   },
   methods: {
-    updateActivity: function () {
-      const activityId = this.$javalin.pathParams["activity-id"];
-      const url = `/api/activities/${activityId}`;
+    updateMeal: function () {
+      const mealId = this.$javalin.pathParams["meal-id"];
+      const url = `/api/meals/${mealId}`;
       axios
         .patch(url, {
-          description: this.activities.description,
-          duration: this.activities.duration,
-          calories: this.activities.calories,
-          started: this.activities.started,
-          userId: this.activities.userId,
+          description: this.meals.description,
+          time: this.meals.time,
+          calories: this.meals.calories,
+          userId: this.meals.userId,
         })
-        .then((response) => this.activities.push(response.data))
+        .then((response) => this.meals.push(response.data))
         .catch((error) => {
           console.log(error);
         });
-      alert("Activity updated!");
+      alert("Meals updated!");
     },
-    deleteActivity: function () {
+    deleteMeal: function () {
       if (
         confirm(
-          "Are you sure you want to delete this activity? This action cannot be undone.",
+          "Are you sure you want to delete this meal? This action cannot be undone.",
           "Warning",
         )
       ) {
         //confirmed delete
-        const activityId = this.$javalin.pathParams["activity-id"];
-        const url = `/api/activities/${activityId}`;
+        const mealId = this.$javalin.pathParams["meal-id"];
+        const url = `/api/meals/${mealId}`;
         axios
           .delete(url)
           .then((response) => {
-            alert("Activity deleted");
-            window.location.href = "/activities";
+            alert("Meal deleted");
+            window.location.href = "/meals";
           })
           .catch(function (error) {
             console.log(error);

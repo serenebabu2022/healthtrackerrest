@@ -22,7 +22,7 @@
               ><span class="ml-2">Diet</span>
             </h5>
             <p class="card-text">Build a nutrition plan for the users</p>
-            <a href="#" class="btn btn-primary">Try out</a>
+            <a href="/meals" class="btn btn-primary">Try out</a>
           </div>
         </div>
       </div>

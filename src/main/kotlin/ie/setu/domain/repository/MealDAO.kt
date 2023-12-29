@@ -67,10 +67,10 @@ class MealDAO {
     }
 
     // Delete a single meal of a user
-    fun deleteMeal(id: Int, userId: Int) {
+    fun deleteMeal(id: Int) {
         return transaction {
             Meals.deleteWhere {
-                (Meals.id eq id) and (Meals.userId eq userId)
+                Meals.id eq id
             }
         }
     }

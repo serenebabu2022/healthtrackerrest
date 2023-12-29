@@ -1,8 +1,6 @@
 package ie.setu.repository
 
-import ie.setu.domain.Friend
 import ie.setu.domain.db.Friends
-import ie.setu.domain.repository.FriendsDAO
 import ie.setu.helpers.friends
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils

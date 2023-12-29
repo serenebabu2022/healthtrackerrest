@@ -1,7 +1,6 @@
 package ie.setu.helpers
 
 import ie.setu.domain.Activity
-import ie.setu.domain.Friend
 import ie.setu.domain.Meal
 import ie.setu.domain.User
 import ie.setu.domain.db.Activities
