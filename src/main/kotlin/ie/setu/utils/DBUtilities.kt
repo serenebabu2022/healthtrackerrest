@@ -24,12 +24,3 @@ fun mapToMeal(it: ResultRow) = Meal(
     time = it[Meals.time],
     userId = it[Meals.userId],
 )
-fun mapToFriend(it: ResultRow) = Friend(
-    id = it[Friends.id],
-    name = it[Friends.name],
-    goals = it[Friends.goals],
-)
-fun mapToUserFriend(it: ResultRow) = UserFriend(
-    userId = it[UserFriends.userId],
-    friendId = it[UserFriends.friendId],
-)
