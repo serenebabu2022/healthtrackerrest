@@ -6,6 +6,7 @@ import io.github.bonigarcia.wdm.WebDriverManager
 import io.github.bonigarcia.wdm.config.DriverManagerType
 import io.javalin.Javalin
 import io.javalin.testtools.JavalinTest
+import okhttp3.internal.wait
 import org.assertj.core.api.Assertions.assertThat
 // import org.joda.time.Duration
 import org.junit.jupiter.api.AfterEach
@@ -87,7 +88,7 @@ class AddUserTest {
             // Wait for the presence of list-group-item(s) by checking if at least one exists
             wait!!.until(ExpectedConditions.presenceOfElementLocated(By.name("list-group")))
             wait!!.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.name("list-group-item"), 0))
-
+            wait!!.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Lisa J Simpson (lisaj@simpson.com)")))
             // Click on the new user and verify we are brought to the user profile page
             driver.findElement(By.linkText("Lisa J Simpson (lisaj@simpson.com)")).click()
             assertThat(driver.pageSource).contains("<template id=\"user-profile\">")
