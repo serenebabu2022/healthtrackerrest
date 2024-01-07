@@ -58,7 +58,7 @@ class UserTrackerControllerTestMockDB {
             // Assert - retrieve the user from the fake database
             val retrieveResponse = retrieveUserByEmail(validEmail)
 
-            // Assert - verify the return code and the contents of the retrieved user
+            // Assert - verify the return code  and the contents of the retrieved user
             Assertions.assertEquals(200, retrieveResponse.status)
             val retrievedUser: User = jsonToObject(addResponse.body.toString())
             Assertions.assertEquals(validEmail, retrievedUser.email)
